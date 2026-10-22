@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vishu Wears: Style a Wish</title>
+<meta name="description" content="Kurtis, dresses and co-ords under ₹999, picked and styled by Vishu. Vishu is an AI-generated character.">
+<meta name="theme-color" content="#FBF2F3">
+<meta property="og:title" content="Vishu Wears">
+<meta property="og:description" content="Style a Wish. Kurtis, dresses and co-ords under ₹999.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBF2F3;   /* page */
+  --blush:#F3DDE1;   /* panels */
+  --wine:#3A0E26;    /* text */
+  --wine-2:#6E4458;  /* secondary text */
+  --rani:#C81E64;    /* main actions only */
+  --gold:#B88A3B;    /* hairlines and frames */
+  --sage:#4F7A5A;
+  --serif:"Bodoni Moda","Didot",Georgia,serif;
+  --sans:"Jost","Helvetica Neue",system-ui,sans-serif;
+  --gutter:clamp(16px,5vw,56px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--paper)}
+body{font:400 16px/1.6 var(--sans);color:var(--wine);background:var(--paper);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--rani);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 var(--gutter)}
+
+/* Top bar */
+.bar{display:flex;justify-content:space-between;align-items:center;padding-top:max(18px,env(safe-area-inset-top));padding-bottom:14px;font-size:14px;color:var(--wine-2);border-bottom:1px solid color-mix(in srgb,var(--gold) 45%,transparent)}
+.bar .mark{font:400 22px/1 var(--serif);color:var(--wine);letter-spacing:-.01em}
+.bar .right{display:flex;align-items:center;gap:14px}
+.ai{border:1px solid currentColor;border-radius:99px;padding:2px 10px;font-size:12.5px}
+.ig{display:grid;place-items:center;width:40px;height:40px;margin:-8px -8px -8px 0;border-radius:50%;color:var(--wine);transition:color .15s,background .15s}
+.ig:hover{color:var(--rani);background:var(--blush)}
+.ig svg{width:22px;height:22px}
+
+/* Hero slideshow */
+.hero{padding-top:clamp(20px,3vw,40px);padding-bottom:clamp(48px,6vw,88px)}
+.slides{display:grid}
+.slide{grid-area:1/1;display:grid;gap:22px;visibility:hidden;z-index:0}
+.slide.is-on{visibility:visible;z-index:2}
+.slide.is-out{visibility:visible;z-index:1}
+/* Photo: whole image, rounded corners. New photo wipes in from the right and settles from a slight zoom. */
+.s-ph{
+  --ph-h:min(64vh,520px);
+  display:block;height:var(--ph-h);width:max-content;max-width:100%;justify-self:center;
+  border-radius:24px;overflow:hidden;background:var(--blush);
+  clip-path:inset(0 0 0 100% round 24px);opacity:1;
+  transition:clip-path 1.1s cubic-bezier(.77,0,.18,1),opacity 0s;
+}
+.s-ph img{height:100%;width:auto;max-width:none;transform:scale(1.14);transition:transform 1.8s cubic-bezier(.2,.7,.2,1)}
+.is-on .s-ph{clip-path:inset(0 0 0 0 round 24px)}
+.is-on .s-ph img{transform:none}
+.is-out .s-ph{clip-path:inset(0 0 0 0 round 24px);opacity:0;transition:opacity .9s ease .15s}
+/* Text: lines rise in one after another once the photo starts moving */
+.s-txt>*{opacity:0;transform:translateY(22px);transition:opacity .3s ease,transform .3s ease}
+.is-on .s-txt>*{opacity:1;transform:none;transition:opacity .7s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.is-on .s-txt>:nth-child(1){transition-delay:.35s}
+.is-on .s-txt>:nth-child(2){transition-delay:.45s}
+.is-on .s-txt>:nth-child(3){transition-delay:.55s}
+.is-on .s-txt>:nth-child(4){transition-delay:.65s}
+.s-txt{max-width:28em}
+.s-brand{font-size:14px;color:var(--wine-2)}
+.s-txt h2{font:400 clamp(34px,4.4vw,58px)/1.04 var(--serif);letter-spacing:-.02em;margin-top:6px}
+.s-txt .s-note{margin-top:14px;font-size:17px;color:var(--wine-2)}
+.ctrl{display:flex;align-items:center;gap:14px;margin-top:22px}
+.ctrl button{
+  width:44px;height:44px;border-radius:50%;border:1px solid color-mix(in srgb,var(--wine) 35%,transparent);
+  background:transparent;color:var(--wine);font:400 20px/1 var(--sans);cursor:pointer;transition:background .15s,color .15s;
+}
+.ctrl button:hover{background:var(--wine);color:var(--paper)}
+.dots{display:flex;gap:8px;margin-left:6px}
+.dots button{width:28px;height:44px;border:0;border-radius:0;background:none;position:relative;padding:0}
+.dots button::after{content:"";position:absolute;left:0;right:0;top:21px;height:2px;background:color-mix(in srgb,var(--wine) 22%,transparent)}
+.dots button[aria-current="true"]::after{background:var(--rani)}
+.dots button:hover{background:none}
+.count{margin-left:auto;font-size:14px;color:var(--wine-2)}
+@media (min-width:860px){
+  .hero-in{position:relative}
+  .slide{grid-template-columns:1fr 1fr;column-gap:72px;align-items:center}
+  .s-ph{grid-column:2;grid-row:1;justify-self:end;--ph-h:min(76vh,640px)}
+  .s-txt{grid-column:1;grid-row:1}
+  .ctrl{position:absolute;left:0;bottom:0;width:calc(50% - 36px);margin-top:0}
+}
+
+/* Masthead */
+.mast{padding-top:clamp(32px,4vw,52px);border-top:1px solid color-mix(in srgb,var(--gold) 45%,transparent)}
+.mast h1{
+  font:400 clamp(40px,6.4vw,80px)/.95 var(--serif);font-optical-sizing:auto;
+  letter-spacing:-.035em;text-align:center;white-space:nowrap;
+}
+.mast .tag{text-align:center;font:italic 400 clamp(17px,1.6vw,20px)/1.25 var(--serif);margin-top:6px}
+
+/* Cover */
+.cover{display:grid;gap:22px;padding-top:clamp(22px,3vw,36px);padding-bottom:clamp(40px,5vw,64px);align-items:end}
+.arch{
+  position:relative;max-width:200px;width:100%;margin:0 auto;aspect-ratio:4/5;
+  border-radius:50% 50% 4px 4px/38% 38% 4px 4px;overflow:hidden;background:#fff;
+  outline:1px solid var(--gold);outline-offset:8px;
+}
+.arch img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.intro{max-width:30em;text-align:center;margin:0 auto}
+.intro p{font-size:16px;color:var(--wine-2)}
+.intro p strong{color:var(--wine);font-weight:500}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;margin-top:18px;
+  padding:12px 24px;background:var(--rani);color:#fff;border-radius:99px;font-weight:500;font-size:15.5px;
+  transition:background .15s;
+}
+.btn:hover{background:var(--wine)}
+@media (min-width:860px){
+  .cover{grid-template-columns:auto minmax(0,30em);justify-content:center;gap:44px;align-items:center}
+  .arch{margin:0 0 0 auto}
+  .intro{text-align:left;margin:0}
+}
+
+/* Section heads */
+.sh{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-bottom:14px;border-bottom:1px solid color-mix(in srgb,var(--gold) 45%,transparent);margin-bottom:22px}
+.sh h2{font:400 clamp(30px,4vw,46px)/1.05 var(--serif);letter-spacing:-.01em}
+.sh p{font-size:14px;color:var(--wine-2);text-align:right}
+
+/* Picks */
+.picks{padding-bottom:clamp(56px,7vw,96px)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:28px 14px}
+@media (min-width:860px){.grid{grid-template-columns:repeat(4,1fr);gap:28px}}
+.pick .ph{aspect-ratio:3/4;overflow:hidden;background:var(--blush);border-radius:4px}
+.pick .ph img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.pick:hover .ph img{transform:scale(1.03)}
+.pick .brand{margin-top:12px;font-size:13px;color:var(--wine-2)}
+.pick h3{font:400 17px/1.3 var(--serif);margin-top:2px}
+.pick .shop{display:inline-block;margin-top:8px;font-size:14px;font-weight:500;color:var(--rani);border-bottom:1px solid currentColor;padding-bottom:1px}
+.pick:hover h3{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+
+/* Community */
+.community{padding-bottom:clamp(56px,7vw,96px)}
+.quotes{display:grid;gap:14px}
+@media (min-width:860px){.quotes{grid-template-columns:repeat(3,1fr)}}
+.quote{background:var(--blush);border-radius:4px;padding:22px}
+.stars{color:var(--gold);letter-spacing:3px}
+.quote p{font:italic 400 19px/1.45 var(--serif);margin-top:6px}
+.quote cite{display:block;margin-top:10px;font-size:13.5px;font-style:normal;color:var(--wine-2)}
+
+/* More: links + verdicts */
+.more{display:grid;gap:clamp(48px,6vw,80px);padding-bottom:clamp(56px,7vw,96px)}
+@media (min-width:860px){.more{grid-template-columns:1.4fr 1fr;align-items:start}}
+.links{list-style:none}
+.links li{border-bottom:1px solid color-mix(in srgb,var(--gold) 45%,transparent)}
+.links a{display:flex;align-items:center;gap:16px;padding:18px 2px;transition:color .15s}
+.links a:hover{color:var(--rani)}
+.links .ico{font-size:22px;width:28px;text-align:center;flex:none}
+.links b{display:block;font:400 21px/1.2 var(--serif)}
+.links small{display:block;font-size:14px;color:var(--wine-2);margin-top:2px}
+.links .go{margin-left:auto;flex:none;color:var(--gold)}
+.links li.hero a{background:var(--rani);color:#fff;border-radius:4px;padding:20px 18px;margin-bottom:6px}
+.links li.hero{border-bottom:0}
+.links li.hero small,.links li.hero .go{color:#fff;opacity:.85}
+.links li.hero a:hover{background:var(--wine);color:#fff}
+
+.verdicts{background:var(--blush);border-radius:4px;padding:clamp(24px,3vw,36px)}
+.verdicts h2{font:400 clamp(26px,3vw,34px)/1.1 var(--serif)}
+.verdicts dl{margin-top:22px;display:grid;gap:18px}
+.verdicts dt{display:inline-block;font-weight:500;font-size:13px;letter-spacing:.05em;padding:6px 12px}
+.verdicts dd{font-size:15px;color:var(--wine-2);margin-top:6px}
+.s1{color:var(--sage);border:2px solid var(--sage);border-radius:99px;transform:rotate(-2deg)}
+.s2{color:var(--rani);border:2px solid var(--rani);border-radius:3px;transform:rotate(1.5deg)}
+.s3{color:var(--gold);border:2px dotted var(--gold);border-radius:8px;transform:rotate(-1deg)}
+.verdicts .note{margin-top:22px;padding-top:16px;border-top:1px solid color-mix(in srgb,var(--gold) 45%,transparent);font-size:14px;color:var(--wine-2)}
+
+/* Footer */
+footer{background:var(--wine);color:var(--paper);padding:clamp(40px,5vw,64px) 0 max(32px,env(safe-area-inset-bottom))}
+footer .wrap{display:grid;gap:20px}
+footer .f-name{font:400 clamp(34px,5vw,56px)/1 var(--serif);letter-spacing:-.02em}
+footer p{font-size:14px;opacity:.75;max-width:52em}
+footer .f-row{display:flex;flex-wrap:wrap;gap:8px 24px;font-size:14px}
+footer .f-row a{border-bottom:1px solid color-mix(in srgb,var(--paper) 40%,transparent)}
+footer .f-row a:hover{border-color:var(--paper)}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="bar">
+    <a class="mark" href="./">Vishu Wears</a>
+    <div class="right">
+      <span class="ai">AI-generated character</span>
+      <a class="ig" href="https://www.instagram.com/vish.wears/" target="_blank" rel="noopener" aria-label="Vishu Wears on Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- HERO SLIDESHOW: one <article class="slide"> per recent pick. The first one has class "is-on". -->
+  <section class="wrap hero" aria-roledescription="carousel" aria-label="Recent picks">
+    <div class="hero-in">
+      <div class="slides" id="slides">
+        <article class="slide is-on" aria-roledescription="slide" aria-label="1 of 4">
+          <a class="s-ph" href="https://link.amazon/B0aE7d9ul" target="_blank" rel="sponsored noopener" tabindex="-1"><img src="img/nermosa-blue.jpg" alt="Vishu in the blue embroidered kurta set with dupatta"></a>
+          <div class="s-txt">
+            <p class="s-brand">Nermosa</p>
+            <h2>Blue embroidered set with dupatta</h2>
+            <p class="s-note">Pleated kurta with a floral yoke and a scalloped organza dupatta.</p>
+            <a class="btn" href="https://link.amazon/B0aE7d9ul" target="_blank" rel="sponsored noopener">Shop on Amazon</a>
+          </div>
+        </article>
+        <article class="slide" aria-roledescription="slide" aria-label="2 of 4">
+          <a class="s-ph" href="https://link.amazon/B09cypOEb" target="_blank" rel="sponsored noopener" tabindex="-1"><img src="img/marigold-yellow.jpg" alt="Vishu in the marigold yellow kurta set with dupatta"></a>
+          <div class="s-txt">
+            <p class="s-brand">Amazon Brand</p>
+            <h2>Marigold yellow kurta set</h2>
+            <p class="s-note">Sunny yellow with an embroidered neckline and a dotted dupatta.</p>
+            <a class="btn" href="https://link.amazon/B09cypOEb" target="_blank" rel="sponsored noopener">Shop on Amazon</a>
+          </div>
+        </article>
+        <article class="slide" aria-roledescription="slide" aria-label="3 of 4">
+          <a class="s-ph" href="https://link.amazon/B02bisOZe" target="_blank" rel="sponsored noopener" tabindex="-1"><img src="img/mokosh-gold.jpg" alt="Vishu in the gold silk embroidered Anarkali"></a>
+          <div class="s-txt">
+            <p class="s-brand">MOKOSH</p>
+            <h2>Gold silk Anarkali with dupatta</h2>
+            <p class="s-note">Tonal embroidery on silk, with a lace-edged dupatta.</p>
+            <a class="btn" href="https://link.amazon/B02bisOZe" target="_blank" rel="sponsored noopener">Shop on Amazon</a>
+          </div>
+        </article>
+        <article class="slide" aria-roledescription="slide" aria-label="4 of 4">
+          <a class="s-ph" href="https://link.amazon/B0540EPBP" target="_blank" rel="sponsored noopener" tabindex="-1"><img src="img/light-green.jpg" alt="Vishu in the light green embroidered kurta with pink dupatta"></a>
+          <div class="s-txt">
+            <p class="s-brand">Amazon Brand</p>
+            <h2>Light green embroidered kurta</h2>
+            <p class="s-note">Soft green with a pink sequinned dupatta for a pop of colour.</p>
+            <a class="btn" href="https://link.amazon/B0540EPBP" target="_blank" rel="sponsored noopener">Shop on Amazon</a>
+          </div>
+        </article>
+      </div>
+      <div class="ctrl">
+        <button type="button" id="prev" aria-label="Previous look">‹</button>
+        <button type="button" id="next" aria-label="Next look">›</button>
+        <div class="dots" id="dots"></div>
+        <span class="count" id="count" aria-live="polite">1 / 4</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDIT: one <a class="pick"> per dress. Photos live in img/. -->
+  <section class="wrap picks" id="picks" aria-labelledby="tp">
+    <div class="sh">
+      <h2 id="tp">Today’s picks</h2>
+      <p>Tap a look to shop it</p>
+    </div>
+    <div class="grid">
+      <a class="pick" href="https://link.amazon/B09cypOEb" target="_blank" rel="sponsored noopener">
+        <div class="ph"><img src="img/marigold-yellow.jpg" alt="Vishu in the marigold yellow kurta set with dupatta" loading="lazy"></div>
+        <p class="brand">Amazon Brand</p>
+        <h3>Marigold yellow kurta set</h3>
+        <span class="shop">Shop on Amazon</span>
+      </a>
+      <a class="pick" href="https://link.amazon/B0aE7d9ul" target="_blank" rel="sponsored noopener">
+        <div class="ph"><img src="img/nermosa-blue.jpg" alt="Vishu in the blue embroidered kurta set with dupatta" loading="lazy"></div>
+        <p class="brand">Nermosa</p>
+        <h3>Blue embroidered set with dupatta</h3>
+        <span class="shop">Shop on Amazon</span>
+      </a>
+      <a class="pick" href="https://link.amazon/B02bisOZe" target="_blank" rel="sponsored noopener">
+        <div class="ph"><img src="img/mokosh-gold.jpg" alt="Vishu in the gold silk embroidered Anarkali" loading="lazy"></div>
+        <p class="brand">MOKOSH</p>
+        <h3>Gold silk Anarkali with dupatta</h3>
+        <span class="shop">Shop on Amazon</span>
+      </a>
+      <a class="pick" href="https://link.amazon/B0540EPBP" target="_blank" rel="sponsored noopener">
+        <div class="ph"><img src="img/light-green.jpg" alt="Vishu in the light green embroidered kurta with pink dupatta" loading="lazy"></div>
+        <p class="brand">Amazon Brand</p>
+        <h3>Light green embroidered kurta</h3>
+        <span class="shop">Shop on Amazon</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Shows only when the list in the script below has real comments -->
+  <section class="wrap community" id="community" aria-labelledby="cm" hidden>
+    <div class="sh"><h2 id="cm">What the community says</h2></div>
+    <div class="quotes" id="quotes"></div>
+  </section>
+
+  <section class="wrap more">
+    <div>
+      <div class="sh"><h2>Shop and follow</h2></div>
+      <!-- EDIT: replace each # with your real link. Rows with # stay hidden. -->
+      <ul class="links">
+        <li class="hero"><a href="#" target="_blank" rel="noopener"><span class="ico" aria-hidden="true">💌</span><span><b>Make a Wish Monday</b><small>Send your wishlist pick and I’ll style it</small></span><span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a href="https://www.instagram.com/vish.wears/" target="_blank" rel="noopener"><span class="ico" aria-hidden="true">✨</span><span><b>Watch Style a Wish reels</b><small>Instagram</small></span><span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a href="#" target="_blank" rel="sponsored noopener"><span class="ico" aria-hidden="true">🛍️</span><span><b>Today’s wishlist on Amazon</b><small>Affiliate links</small></span><span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a href="#" target="_blank" rel="sponsored noopener"><span class="ico" aria-hidden="true">👗</span><span><b>Myntra picks under ₹999</b><small>Affiliate links</small></span><span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a href="#" target="_blank" rel="noopener"><span class="ico" aria-hidden="true">🪔</span><span><b>Festive Wishes: Diwali edit</b><small>Festive outfits on a budget</small></span><span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a href="#" target="_blank" rel="noopener"><span class="ico" aria-hidden="true">✅</span><span><b>Wish Granted: my top keeps</b><small>The best buys so far</small></span><span class="go" aria-hidden="true">↗</span></a></li>
+      </ul>
+    </div>
+
+    <aside class="verdicts" aria-labelledby="st">
+      <h2 id="st">Every pick gets a verdict</h2>
+      <dl>
+        <div><dt class="s1">WISH GRANTED</dt><dd>Worth it. Keep it on your list.</dd></div>
+        <div><dt class="s2">WISH SKIPPED</dt><dd>Not worth the money.</dd></div>
+        <div><dt class="s3">WISHFUL MAYBE</dt><dd>Depends on your body type or budget.</dd></div>
+      </dl>
+      <p class="note">Verdicts come from product specs and customer reviews, not hands-on testing.</p>
+    </aside>
+  </section>
+  <section class="wrap" aria-label="About Vishu">
+    <div class="mast">
+      <h1>Vishu Wears</h1>
+      <p class="tag">Style a Wish</p>
+    </div>
+  </section>
+
+  <section class="wrap cover" aria-label="Meet Vishu">
+    <!-- Portrait: vishu.jpg next to this file -->
+    <div class="arch"><img src="vishu.jpg" alt="Vishu, an AI-generated character, in a rust kurta and silver jhumkas"></div>
+    <div class="intro">
+      <p><strong>Hi, I’m Vishu.</strong><br>A budget-friendly fashion stylist from Mumbai, finding stylish kurtis, dresses and co-ords on Amazon and Myntra. Look expensive, spend smart.</p>
+      <a class="btn" href="#picks">See today’s picks</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="f-name">Vishu Wears</p>
+    <div class="f-row">
+      <a href="https://www.instagram.com/vish.wears/" target="_blank" rel="noopener">Instagram</a>
+      <span>Mumbai</span>
+    </div>
+    <p>Vishu is an AI-generated character. As an Amazon and Myntra affiliate, Vishu may earn a commission on purchases made through links, at no extra cost to you.</p>
+  </div>
+</footer>
+
+<script>
+  // Hero slideshow: changes every 5 seconds (photo wipes in, text rises), pauses on hover or keyboard focus, and stays still for reduced motion.
+  (function () {
+    var slides = [].slice.call(document.querySelectorAll('#slides .slide'));
+    var dots = document.getElementById('dots'), count = document.getElementById('count');
+    var hero = document.querySelector('.hero'), i = 0, timer = null;
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    slides.forEach(function (s, n) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.setAttribute('aria-label', 'Show look ' + (n + 1));
+      b.addEventListener('click', function () { go(n); restart(); });
+      dots.appendChild(b);
+    });
+    function go(n) {
+      var from = slides[i];
+      i = (n + slides.length) % slides.length;
+      if (from !== slides[i]) {
+        slides.forEach(function (s) { s.classList.remove('is-out'); });
+        from.classList.add('is-out');
+        clearTimeout(from._t); from._t = setTimeout(function () { from.classList.remove('is-out'); }, 1200);
+      }
+      slides.forEach(function (s, k) {
+        var on = k === i;
+        s.classList.toggle('is-on', on);
+        s.setAttribute('aria-hidden', on ? 'false' : 'true');
+        s.querySelectorAll('a').forEach(function (a) { if (!a.classList.contains('s-ph')) a.tabIndex = on ? 0 : -1; });
+        dots.children[k].setAttribute('aria-current', on ? 'true' : 'false');
+      });
+      count.textContent = (i + 1) + ' / ' + slides.length;
+    }
+    function start() { if (!still && !timer) timer = setInterval(function () { go(i + 1); }, 5000); }
+    function stop() { clearInterval(timer); timer = null; }
+    function restart() { stop(); start(); }
+    document.getElementById('prev').addEventListener('click', function () { go(i - 1); restart(); });
+    document.getElementById('next').addEventListener('click', function () { go(i + 1); restart(); });
+    hero.addEventListener('mouseenter', stop); hero.addEventListener('mouseleave', start);
+    hero.addEventListener('focusin', stop); hero.addEventListener('focusout', start);
+    var x0 = null;
+    hero.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    hero.addEventListener('touchend', function (e) {
+      if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) { go(i + (dx < 0 ? 1 : -1)); restart(); }
+    });
+    go(0); start();
+  })();
+
+  // Hide link rows that still point to "#". They appear once a real link is pasted in.
+  document.querySelectorAll('.links a[href="#"]').forEach(function (a) { a.parentNode.hidden = true; });
+
+  // Add REAL comments or DMs from followers (with their OK). The section stays hidden until this list has entries.
+  // Format: { text: "Their words", name: "@their_handle", stars: 5 }  (stars is optional)
+  var community = [
+    // { text: "Paste a real comment here.", name: "@follower", stars: 5 },
+  ];
+  if (community.length) {
+    var box = document.getElementById('quotes');
+    community.forEach(function (c) {
+      var q = document.createElement('div'); q.className = 'quote';
+      var stars = c.stars ? '<div class="stars" aria-label="' + c.stars + ' out of 5 stars">' + '★'.repeat(c.stars) + '</div>' : '';
+      q.innerHTML = stars + '<p></p><cite></cite>';
+      q.querySelector('p').textContent = c.text;
+      q.querySelector('cite').textContent = c.name || '';
+      box.appendChild(q);
+    });
+    document.getElementById('community').hidden = false;
+  }
+</script>
+</body>
+</html>
