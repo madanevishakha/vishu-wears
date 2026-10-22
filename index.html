@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Vishu Wears: Style a Wish</title>
-<meta name="description" content="Kurtis, dresses and co-ords under ₹999, picked and styled by Vishu. Vishu is an AI-generated character.">
+<meta name="description" content="Budget-friendly kurtis, dresses and co-ords from Amazon and Myntra, picked and styled by Vishu. Vishu is an AI-generated character.">
 <meta name="theme-color" content="#FBF2F3">
 <meta property="og:title" content="Vishu Wears">
-<meta property="og:description" content="Style a Wish. Kurtis, dresses and co-ords under ₹999.">
+<meta property="og:description" content="Style a Wish. Budget-friendly kurtis, dresses and co-ords, picked by Vishu.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,60 +42,64 @@ a{color:inherit;text-decoration:none}
 .ig:hover{color:var(--rani);background:var(--blush)}
 .ig svg{width:22px;height:22px}
 
-/* Hero slideshow */
+/* Hero slideshow: text on the left, a row of photos on the right.
+   The current photo is bright; the next one sits beside it, dimmed and fading out. Each step glides the row left. */
 .hero{padding-top:clamp(20px,3vw,40px);padding-bottom:clamp(48px,6vw,88px)}
+.hero-in{display:grid;gap:24px}
+.gallery{
+  --ph-h:min(62vh,500px);order:-1;overflow:hidden;margin-right:calc(-1 * var(--gutter));
+  -webkit-mask-image:linear-gradient(to right,#000 68%,transparent 100%);mask-image:linear-gradient(to right,#000 68%,transparent 100%);
+}
+.track{display:flex;gap:clamp(14px,1.6vw,22px);will-change:transform}
+.track.anim{transition:transform 1s cubic-bezier(.65,0,.35,1)}
+.g-item{flex:none;display:block;position:relative;height:var(--ph-h);border-radius:24px;overflow:hidden;background:var(--blush)}
+.g-item img{height:100%;width:auto;max-width:none;transform:scale(1.05);transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.g-item::after{
+  content:"";position:absolute;inset:0;pointer-events:none;transition:opacity .9s ease;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--paper) 40%,transparent),color-mix(in srgb,var(--paper) 78%,transparent));
+}
+.g-item.is-active::after{opacity:0}
+.g-item.is-active img{transform:none}
+.g-item:not(.is-active){cursor:pointer}
 .slides{display:grid}
-.slide{grid-area:1/1;display:grid;gap:22px;visibility:hidden;z-index:0}
+.slide{grid-area:1/1;visibility:hidden;z-index:0}
 .slide.is-on{visibility:visible;z-index:2}
 .slide.is-out{visibility:visible;z-index:1}
-/* Photo: whole image, rounded corners. New photo wipes in from the right and settles from a slight zoom. */
-.s-ph{
-  --ph-h:min(64vh,520px);
-  display:block;height:var(--ph-h);width:max-content;max-width:100%;justify-self:center;
-  border-radius:24px;overflow:hidden;background:var(--blush);
-  clip-path:inset(0 0 0 100% round 24px);opacity:1;
-  transition:clip-path 1.1s cubic-bezier(.77,0,.18,1),opacity 0s;
-}
-.s-ph img{height:100%;width:auto;max-width:none;transform:scale(1.14);transition:transform 1.8s cubic-bezier(.2,.7,.2,1)}
-.is-on .s-ph{clip-path:inset(0 0 0 0 round 24px)}
-.is-on .s-ph img{transform:none}
-.is-out .s-ph{clip-path:inset(0 0 0 0 round 24px);opacity:0;transition:opacity .9s ease .15s}
-/* Text: lines rise in one after another once the photo starts moving */
+/* Text: lines rise in one after another as the photos move */
 .s-txt>*{opacity:0;transform:translateY(22px);transition:opacity .3s ease,transform .3s ease}
 .is-on .s-txt>*{opacity:1;transform:none;transition:opacity .7s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
-.is-on .s-txt>:nth-child(1){transition-delay:.35s}
-.is-on .s-txt>:nth-child(2){transition-delay:.45s}
-.is-on .s-txt>:nth-child(3){transition-delay:.55s}
-.is-on .s-txt>:nth-child(4){transition-delay:.65s}
+.is-on .s-txt>:nth-child(1){transition-delay:.3s}
+.is-on .s-txt>:nth-child(2){transition-delay:.4s}
+.is-on .s-txt>:nth-child(3){transition-delay:.5s}
+.is-on .s-txt>:nth-child(4){transition-delay:.6s}
 .s-txt{max-width:28em}
 .s-brand{font-size:14px;color:var(--wine-2)}
-.s-txt h2{font:400 clamp(34px,4.4vw,58px)/1.04 var(--serif);letter-spacing:-.02em;margin-top:6px}
+.s-txt h2{font:400 clamp(34px,4.2vw,56px)/1.04 var(--serif);letter-spacing:-.02em;margin-top:6px}
 .s-txt .s-note{margin-top:14px;font-size:17px;color:var(--wine-2)}
-.ctrl{display:flex;align-items:center;gap:14px;margin-top:22px}
+.ctrl{display:flex;align-items:center;gap:14px}
 .ctrl button{
   width:44px;height:44px;border-radius:50%;border:1px solid color-mix(in srgb,var(--wine) 35%,transparent);
   background:transparent;color:var(--wine);font:400 20px/1 var(--sans);cursor:pointer;transition:background .15s,color .15s;
 }
 .ctrl button:hover{background:var(--wine);color:var(--paper)}
-.dots{display:flex;gap:8px;margin-left:6px}
-.dots button{width:28px;height:44px;border:0;border-radius:0;background:none;position:relative;padding:0}
+.dots{display:flex;gap:5px;margin-left:4px}
+.dots button{width:16px;height:44px;border:0;border-radius:0;background:none;position:relative;padding:0}
 .dots button::after{content:"";position:absolute;left:0;right:0;top:21px;height:2px;background:color-mix(in srgb,var(--wine) 22%,transparent)}
 .dots button[aria-current="true"]::after{background:var(--rani)}
 .dots button:hover{background:none}
-.count{margin-left:auto;font-size:14px;color:var(--wine-2)}
+.count{margin-left:auto;font-size:14px;color:var(--wine-2);white-space:nowrap}
 @media (min-width:860px){
-  .hero-in{position:relative}
-  .slide{grid-template-columns:1fr 1fr;column-gap:72px;align-items:center}
-  .s-ph{grid-column:2;grid-row:1;justify-self:end;--ph-h:min(76vh,640px)}
-  .s-txt{grid-column:1;grid-row:1}
-  .ctrl{position:absolute;left:0;bottom:0;width:calc(50% - 36px);margin-top:0}
+  .hero-in{grid-template-columns:minmax(300px,36%) 1fr;grid-template-rows:1fr auto;column-gap:clamp(32px,4vw,56px);row-gap:0}
+  .gallery{--ph-h:min(76vh,640px);order:0;grid-column:2;grid-row:1/3}
+  .slides{grid-column:1;grid-row:1;align-self:center}
+  .ctrl{grid-column:1;grid-row:2;position:relative;z-index:5}
 }
 
 /* Masthead */
 .mast{padding-top:clamp(32px,4vw,52px);border-top:1px solid color-mix(in srgb,var(--gold) 45%,transparent)}
 .mast h1{
-  font:400 clamp(40px,6.4vw,80px)/.95 var(--serif);font-optical-sizing:auto;
-  letter-spacing:-.035em;text-align:center;white-space:nowrap;
+  font:400 clamp(30px,4vw,46px)/1.05 var(--serif);
+  letter-spacing:-.01em;text-align:center;
 }
 .mast .tag{text-align:center;font:italic 400 clamp(17px,1.6vw,20px)/1.25 var(--serif);margin-top:6px}
 
@@ -127,6 +131,14 @@ a{color:inherit;text-decoration:none}
 .sh h2{font:400 clamp(30px,4vw,46px)/1.05 var(--serif);letter-spacing:-.01em}
 .sh p{font-size:14px;color:var(--wine-2);text-align:right}
 
+/* Tags */
+.tag-pill{display:inline-block;font-size:12px;font-weight:500;color:var(--wine);background:var(--blush);border-radius:99px;padding:2px 10px;margin-right:8px;vertical-align:1px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:-6px 0 22px}
+.tags button{font:500 14px/1 var(--sans);color:var(--wine);background:transparent;border:1px solid color-mix(in srgb,var(--wine) 30%,transparent);border-radius:99px;padding:10px 16px;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.tags button:hover{border-color:var(--wine)}
+.tags button[aria-pressed="true"]{background:var(--wine);border-color:var(--wine);color:var(--paper)}
+.pick[hidden]{display:none}
+
 /* Picks */
 .picks{padding-bottom:clamp(56px,7vw,96px)}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:28px 14px}
@@ -134,7 +146,8 @@ a{color:inherit;text-decoration:none}
 .pick .ph{aspect-ratio:3/4;overflow:hidden;background:var(--blush);border-radius:4px}
 .pick .ph img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
 .pick:hover .ph img{transform:scale(1.03)}
-.pick .brand{margin-top:12px;font-size:13px;color:var(--wine-2)}
+.pick .tag-pill{margin-top:12px}
+.pick .brand{margin-top:6px;font-size:13px;color:var(--wine-2)}
 .pick h3{font:400 17px/1.3 var(--serif);margin-top:2px}
 .pick .shop{display:inline-block;margin-top:8px;font-size:14px;font-weight:500;color:var(--rani);border-bottom:1px solid currentColor;padding-bottom:1px}
 .pick:hover h3{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
@@ -201,83 +214,157 @@ footer .f-row a:hover{border-color:var(--paper)}
 </header>
 
 <main>
-  <!-- HERO SLIDESHOW: one <article class="slide"> per recent pick. The first one has class "is-on". -->
+  <!-- HERO SLIDESHOW: one <article class="slide"> per recent pick (the first has class "is-on"). The script moves each photo into the row on the right. -->
   <section class="wrap hero" aria-roledescription="carousel" aria-label="Recent picks">
     <div class="hero-in">
       <div class="slides" id="slides">
-        <article class="slide is-on" aria-roledescription="slide" aria-label="1 of 4">
+        <article class="slide is-on" aria-roledescription="slide" aria-label="1 of 8">
+          <a class="s-ph" href="https://link.amazon/B0dDopewB" target="_blank" rel="sponsored noopener" tabindex="-1"><img src="img/harvi-blue-denim.jpg" alt="Vishu in the blue denim kurta with white floral embroidery and palazzo"></a>
+          <div class="s-txt">
+            <p class="s-brand"><span class="tag-pill">Co-ord set</span>Harvi</p>
+            <h2>Blue denim kurta with palazzo</h2>
+            <p class="s-note">White floral embroidery on soft blue denim, with matching wide palazzos.</p>
+            <a class="btn" href="https://link.amazon/B0dDopewB" target="_blank" rel="sponsored noopener">Shop on Amazon</a>
+          </div>
+        </article>
+        <article class="slide" aria-roledescription="slide" aria-label="2 of 8">
+          <a class="s-ph" href="https://link.amazon/B0byF5tFX" target="_blank" rel="sponsored noopener" tabindex="-1"><img src="img/lookmark-purple.jpg" alt="Vishu in the purple kurta set with gold borders and cream farshi salwar"></a>
+          <div class="s-txt">
+            <p class="s-brand"><span class="tag-pill">Co-ord set</span>LookMark</p>
+            <h2>Purple kurta set with farshi salwar</h2>
+            <p class="s-note">Gold gota borders, sheer berry sleeves and a cream farshi salwar.</p>
+            <a class="btn" href="https://link.amazon/B0byF5tFX" target="_blank" rel="sponsored noopener">Shop on Amazon</a>
+          </div>
+        </article>
+        <article class="slide" aria-roledescription="slide" aria-label="3 of 8">
+          <a class="s-ph" href="https://link.amazon/B0h9z1Xyp" target="_blank" rel="sponsored noopener" tabindex="-1"><img src="img/denim-coord.jpg" alt="Vishu in the navy denim co-ord set with elephant tassels"></a>
+          <div class="s-txt">
+            <p class="s-brand"><span class="tag-pill">Co-ord set</span>Amazon find</p>
+            <h2>Navy denim co-ord set</h2>
+            <p class="s-note">Jacquard denim tunic with elephant tassels and wide-leg palazzos.</p>
+            <a class="btn" href="https://link.amazon/B0h9z1Xyp" target="_blank" rel="sponsored noopener">Shop on Amazon</a>
+          </div>
+        </article>
+        <article class="slide" aria-roledescription="slide" aria-label="4 of 8">
+          <a class="s-ph" href="https://link.amazon/B0i7eIvaS" target="_blank" rel="sponsored noopener" tabindex="-1"><img src="img/black-paisley.jpg" alt="Vishu in the black paisley print kurta with pearl-drop hem"></a>
+          <div class="s-txt">
+            <p class="s-brand"><span class="tag-pill">Co-ord set</span>Amazon find</p>
+            <h2>Black paisley kurta set</h2>
+            <p class="s-note">Paisley print with a pearl-drop hem, made for festive evenings.</p>
+            <a class="btn" href="https://link.amazon/B0i7eIvaS" target="_blank" rel="sponsored noopener">Shop on Amazon</a>
+          </div>
+        </article>
+        <article class="slide" aria-roledescription="slide" aria-label="5 of 8">
           <a class="s-ph" href="https://link.amazon/B0aE7d9ul" target="_blank" rel="sponsored noopener" tabindex="-1"><img src="img/nermosa-blue.jpg" alt="Vishu in the blue embroidered kurta set with dupatta"></a>
           <div class="s-txt">
-            <p class="s-brand">Nermosa</p>
+            <p class="s-brand"><span class="tag-pill">Festive wear</span>Nermosa</p>
             <h2>Blue embroidered set with dupatta</h2>
             <p class="s-note">Pleated kurta with a floral yoke and a scalloped organza dupatta.</p>
             <a class="btn" href="https://link.amazon/B0aE7d9ul" target="_blank" rel="sponsored noopener">Shop on Amazon</a>
           </div>
         </article>
-        <article class="slide" aria-roledescription="slide" aria-label="2 of 4">
+        <article class="slide" aria-roledescription="slide" aria-label="6 of 8">
           <a class="s-ph" href="https://link.amazon/B09cypOEb" target="_blank" rel="sponsored noopener" tabindex="-1"><img src="img/marigold-yellow.jpg" alt="Vishu in the marigold yellow kurta set with dupatta"></a>
           <div class="s-txt">
-            <p class="s-brand">Amazon Brand</p>
+            <p class="s-brand"><span class="tag-pill">Festive wear</span>Amazon Brand</p>
             <h2>Marigold yellow kurta set</h2>
             <p class="s-note">Sunny yellow with an embroidered neckline and a dotted dupatta.</p>
             <a class="btn" href="https://link.amazon/B09cypOEb" target="_blank" rel="sponsored noopener">Shop on Amazon</a>
           </div>
         </article>
-        <article class="slide" aria-roledescription="slide" aria-label="3 of 4">
+        <article class="slide" aria-roledescription="slide" aria-label="7 of 8">
           <a class="s-ph" href="https://link.amazon/B02bisOZe" target="_blank" rel="sponsored noopener" tabindex="-1"><img src="img/mokosh-gold.jpg" alt="Vishu in the gold silk embroidered Anarkali"></a>
           <div class="s-txt">
-            <p class="s-brand">MOKOSH</p>
+            <p class="s-brand"><span class="tag-pill">Festive wear</span>MOKOSH</p>
             <h2>Gold silk Anarkali with dupatta</h2>
             <p class="s-note">Tonal embroidery on silk, with a lace-edged dupatta.</p>
             <a class="btn" href="https://link.amazon/B02bisOZe" target="_blank" rel="sponsored noopener">Shop on Amazon</a>
           </div>
         </article>
-        <article class="slide" aria-roledescription="slide" aria-label="4 of 4">
+        <article class="slide" aria-roledescription="slide" aria-label="8 of 8">
           <a class="s-ph" href="https://link.amazon/B0540EPBP" target="_blank" rel="sponsored noopener" tabindex="-1"><img src="img/light-green.jpg" alt="Vishu in the light green embroidered kurta with pink dupatta"></a>
           <div class="s-txt">
-            <p class="s-brand">Amazon Brand</p>
+            <p class="s-brand"><span class="tag-pill">Festive wear</span>Amazon Brand</p>
             <h2>Light green embroidered kurta</h2>
             <p class="s-note">Soft green with a pink sequinned dupatta for a pop of colour.</p>
             <a class="btn" href="https://link.amazon/B0540EPBP" target="_blank" rel="sponsored noopener">Shop on Amazon</a>
           </div>
         </article>
       </div>
+      <div class="gallery" aria-hidden="true"><div class="track" id="track"></div></div>
       <div class="ctrl">
         <button type="button" id="prev" aria-label="Previous look">‹</button>
         <button type="button" id="next" aria-label="Next look">›</button>
         <div class="dots" id="dots"></div>
-        <span class="count" id="count" aria-live="polite">1 / 4</span>
+        <span class="count" id="count" aria-live="polite">1 / 8</span>
       </div>
     </div>
   </section>
 
-  <!-- EDIT: one <a class="pick"> per dress. Photos live in img/. -->
+  <!-- EDIT: one <a class="pick"> per dress. Photos live in img/. data-tag is "coord" (Co-ord sets) or "festive" (Festive wear). -->
   <section class="wrap picks" id="picks" aria-labelledby="tp">
     <div class="sh">
       <h2 id="tp">Today’s picks</h2>
       <p>Tap a look to shop it</p>
     </div>
+    <div class="tags" role="group" aria-label="Filter picks">
+      <button type="button" data-f="all" aria-pressed="true">All</button>
+      <button type="button" data-f="coord" aria-pressed="false">Co-ord sets</button>
+      <button type="button" data-f="festive" aria-pressed="false">Festive wear</button>
+    </div>
     <div class="grid">
-      <a class="pick" href="https://link.amazon/B09cypOEb" target="_blank" rel="sponsored noopener">
+      <a class="pick" data-tag="coord" href="https://link.amazon/B0dDopewB" target="_blank" rel="sponsored noopener">
+        <div class="ph"><img src="img/harvi-blue-denim.jpg" alt="Vishu in the blue denim kurta with white floral embroidery and palazzo" loading="lazy"></div>
+        <span class="tag-pill">Co-ord set</span>
+        <p class="brand">Harvi</p>
+        <h3>Blue denim kurta with palazzo</h3>
+        <span class="shop">Shop on Amazon</span>
+      </a>
+      <a class="pick" data-tag="coord" href="https://link.amazon/B0byF5tFX" target="_blank" rel="sponsored noopener">
+        <div class="ph"><img src="img/lookmark-purple.jpg" alt="Vishu in the purple kurta set with gold borders and cream farshi salwar" loading="lazy"></div>
+        <span class="tag-pill">Co-ord set</span>
+        <p class="brand">LookMark</p>
+        <h3>Purple kurta set with farshi salwar</h3>
+        <span class="shop">Shop on Amazon</span>
+      </a>
+      <a class="pick" data-tag="coord" href="https://link.amazon/B0h9z1Xyp" target="_blank" rel="sponsored noopener">
+        <div class="ph"><img src="img/denim-coord.jpg" alt="Vishu in the navy denim co-ord set with elephant tassels" loading="lazy"></div>
+        <span class="tag-pill">Co-ord set</span>
+        <p class="brand">Amazon find</p>
+        <h3>Navy denim co-ord set</h3>
+        <span class="shop">Shop on Amazon</span>
+      </a>
+      <a class="pick" data-tag="coord" href="https://link.amazon/B0i7eIvaS" target="_blank" rel="sponsored noopener">
+        <div class="ph"><img src="img/black-paisley.jpg" alt="Vishu in the black paisley print kurta with pearl-drop hem" loading="lazy"></div>
+        <span class="tag-pill">Co-ord set</span>
+        <p class="brand">Amazon find</p>
+        <h3>Black paisley kurta set</h3>
+        <span class="shop">Shop on Amazon</span>
+      </a>
+      <a class="pick" data-tag="festive" href="https://link.amazon/B09cypOEb" target="_blank" rel="sponsored noopener">
         <div class="ph"><img src="img/marigold-yellow.jpg" alt="Vishu in the marigold yellow kurta set with dupatta" loading="lazy"></div>
+        <span class="tag-pill">Festive wear</span>
         <p class="brand">Amazon Brand</p>
         <h3>Marigold yellow kurta set</h3>
         <span class="shop">Shop on Amazon</span>
       </a>
-      <a class="pick" href="https://link.amazon/B0aE7d9ul" target="_blank" rel="sponsored noopener">
+      <a class="pick" data-tag="festive" href="https://link.amazon/B0aE7d9ul" target="_blank" rel="sponsored noopener">
         <div class="ph"><img src="img/nermosa-blue.jpg" alt="Vishu in the blue embroidered kurta set with dupatta" loading="lazy"></div>
+        <span class="tag-pill">Festive wear</span>
         <p class="brand">Nermosa</p>
         <h3>Blue embroidered set with dupatta</h3>
         <span class="shop">Shop on Amazon</span>
       </a>
-      <a class="pick" href="https://link.amazon/B02bisOZe" target="_blank" rel="sponsored noopener">
+      <a class="pick" data-tag="festive" href="https://link.amazon/B02bisOZe" target="_blank" rel="sponsored noopener">
         <div class="ph"><img src="img/mokosh-gold.jpg" alt="Vishu in the gold silk embroidered Anarkali" loading="lazy"></div>
+        <span class="tag-pill">Festive wear</span>
         <p class="brand">MOKOSH</p>
         <h3>Gold silk Anarkali with dupatta</h3>
         <span class="shop">Shop on Amazon</span>
       </a>
-      <a class="pick" href="https://link.amazon/B0540EPBP" target="_blank" rel="sponsored noopener">
+      <a class="pick" data-tag="festive" href="https://link.amazon/B0540EPBP" target="_blank" rel="sponsored noopener">
         <div class="ph"><img src="img/light-green.jpg" alt="Vishu in the light green embroidered kurta with pink dupatta" loading="lazy"></div>
+        <span class="tag-pill">Festive wear</span>
         <p class="brand">Amazon Brand</p>
         <h3>Light green embroidered kurta</h3>
         <span class="shop">Shop on Amazon</span>
@@ -345,21 +432,37 @@ footer .f-row a:hover{border-color:var(--paper)}
 </footer>
 
 <script>
-  // Hero slideshow: changes every 5 seconds (photo wipes in, text rises), pauses on hover or keyboard focus, and stays still for reduced motion.
+  // Hero slideshow (random order each visit): every 5 seconds the photo row glides left, the next photo lights up and the text changes.
+  // Pauses on hover or keyboard focus; no motion for reduced-motion settings.
   (function () {
     var slides = [].slice.call(document.querySelectorAll('#slides .slide'));
-    var dots = document.getElementById('dots'), count = document.getElementById('count');
-    var hero = document.querySelector('.hero'), i = 0, timer = null;
-    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Shuffle the looks on every visit so tags mix and each visit starts with a different look
+    for (var r = slides.length - 1; r > 0; r--) {
+      var q = Math.floor(Math.random() * (r + 1)), t = slides[r]; slides[r] = slides[q]; slides[q] = t;
+    }
     slides.forEach(function (s, n) {
-      var b = document.createElement('button');
-      b.type = 'button'; b.setAttribute('aria-label', 'Show look ' + (n + 1));
-      b.addEventListener('click', function () { go(n); restart(); });
-      dots.appendChild(b);
+      s.parentNode.appendChild(s);
+      s.classList.toggle('is-on', n === 0);
+      s.setAttribute('aria-label', (n + 1) + ' of ' + slides.length);
     });
-    function go(n) {
+    var track = document.getElementById('track'), N = slides.length;
+    var dots = document.getElementById('dots'), count = document.getElementById('count');
+    var hero = document.querySelector('.hero'), i = 0, g = 0, timer = null;
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Move each slide's photo into the row, then add one copy of the row so it can loop
+    slides.forEach(function (s) { var a = s.querySelector('.s-ph'); a.classList.add('g-item'); track.appendChild(a); });
+    slides.forEach(function (s, k) { var c = track.children[k].cloneNode(true); track.appendChild(c); });
+    var items = [].slice.call(track.children);
+
+    function place(k, animate) {
+      track.classList.toggle('anim', animate && !still);
+      track.style.transform = 'translateX(' + -(items[k].offsetLeft - items[0].offsetLeft) + 'px)';
+      items.forEach(function (el, n) { el.classList.toggle('is-active', n % N === k % N); });
+    }
+    function text(n) {
       var from = slides[i];
-      i = (n + slides.length) % slides.length;
+      i = n;
       if (from !== slides[i]) {
         slides.forEach(function (s) { s.classList.remove('is-out'); });
         from.classList.add('is-out');
@@ -369,25 +472,71 @@ footer .f-row a:hover{border-color:var(--paper)}
         var on = k === i;
         s.classList.toggle('is-on', on);
         s.setAttribute('aria-hidden', on ? 'false' : 'true');
-        s.querySelectorAll('a').forEach(function (a) { if (!a.classList.contains('s-ph')) a.tabIndex = on ? 0 : -1; });
+        s.querySelectorAll('a').forEach(function (a) { a.tabIndex = on ? 0 : -1; });
         dots.children[k].setAttribute('aria-current', on ? 'true' : 'false');
       });
-      count.textContent = (i + 1) + ' / ' + slides.length;
+      count.textContent = (i + 1) + ' / ' + N;
     }
-    function start() { if (!still && !timer) timer = setInterval(function () { go(i + 1); }, 5000); }
+    function to(k) {                       // k is a position in the row (0 .. 2N-1)
+      if (k < 0) { place(N, false); track.offsetWidth; k = N - 1; }
+      g = k; place(g, true); text(g % N);
+    }
+    track.addEventListener('transitionend', function (e) {
+      if (e.target === track && g >= N) { g -= N; place(g, false); }
+    });
+    // Clicking the dimmed photo brings it forward instead of opening the shop
+    items.forEach(function (el, n) {
+      el.addEventListener('click', function (e) {
+        if (n % N !== i) { e.preventDefault(); to(n < g ? n + N : n); restart(); }
+      });
+    });
+    slides.forEach(function (s, n) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.setAttribute('aria-label', 'Show look ' + (n + 1));
+      b.addEventListener('click', function () {
+        if (g >= N) { g -= N; place(g, false); track.offsetWidth; }
+        to(n); restart();
+      });
+      dots.appendChild(b);
+    });
+
+    function start() { if (!still && !timer) timer = setInterval(function () { to(g + 1); }, 5000); }
     function stop() { clearInterval(timer); timer = null; }
     function restart() { stop(); start(); }
-    document.getElementById('prev').addEventListener('click', function () { go(i - 1); restart(); });
-    document.getElementById('next').addEventListener('click', function () { go(i + 1); restart(); });
+    document.getElementById('prev').addEventListener('click', function () { to(g - 1); restart(); });
+    document.getElementById('next').addEventListener('click', function () { to(g + 1); restart(); });
     hero.addEventListener('mouseenter', stop); hero.addEventListener('mouseleave', start);
     hero.addEventListener('focusin', stop); hero.addEventListener('focusout', start);
     var x0 = null;
     hero.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
     hero.addEventListener('touchend', function (e) {
       if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; x0 = null;
-      if (Math.abs(dx) > 40) { go(i + (dx < 0 ? 1 : -1)); restart(); }
+      if (Math.abs(dx) > 40) { to(g + (dx < 0 ? 1 : -1)); restart(); }
     });
-    go(0); start();
+    window.addEventListener('resize', function () { place(g, false); });
+    text(0); place(0, false);
+    window.addEventListener('load', function () { place(g, false); start(); });
+  })();
+
+  // Tag filter for Today's picks. Links ending in #co-ord-sets or #festive-wear open with that tag selected.
+  (function () {
+    var btns = [].slice.call(document.querySelectorAll('.tags button'));
+    var picks = [].slice.call(document.querySelectorAll('.pick'));
+    // Shuffle the grid on every visit too, so tags are mixed under "All"
+    for (var r = picks.length - 1; r > 0; r--) {
+      var q = Math.floor(Math.random() * (r + 1)), t = picks[r]; picks[r] = picks[q]; picks[q] = t;
+    }
+    picks.forEach(function (p) { p.parentNode.appendChild(p); });
+    function show(f) {
+      btns.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.f === f ? 'true' : 'false'); });
+      picks.forEach(function (p) { p.hidden = f !== 'all' && p.dataset.tag !== f; });
+    }
+    btns.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.f); }); });
+    function fromHash() {
+      var h = { '#co-ord-sets': 'coord', '#festive-wear': 'festive' }[location.hash];
+      if (h) { show(h); document.getElementById('picks').scrollIntoView(); }
+    }
+    window.addEventListener('hashchange', fromHash); fromHash();
   })();
 
   // Hide link rows that still point to "#". They appear once a real link is pasted in.
