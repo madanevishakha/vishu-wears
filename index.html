@@ -88,7 +88,7 @@ a{color:inherit;text-decoration:none}
 .dots button[aria-current="true"]::after{background:var(--rani)}
 .dots button:hover{background:none}
 .count{margin-left:auto;font-size:14px;color:var(--wine-2);white-space:nowrap}
-@media (max-width:600px){.dots{display:none}}
+@media (max-width:600px){.dots{display:none}.hero .sh p{display:none}}
 @media (min-width:860px){
   .hero-in{grid-template-columns:minmax(300px,36%) 1fr;grid-template-rows:1fr auto;column-gap:clamp(32px,4vw,56px);row-gap:0}
   .gallery{--ph-h:min(76vh,640px);order:0;grid-column:2;grid-row:1/3}
@@ -216,7 +216,11 @@ footer .f-row a:hover{border-color:var(--paper)}
 
 <main>
   <!-- HERO SLIDESHOW: one <article class="slide"> per recent pick (the first has class "is-on"). The script moves each photo into the row on the right. -->
-  <section class="wrap hero" aria-roledescription="carousel" aria-label="Recent picks">
+  <section class="wrap hero" aria-roledescription="carousel" aria-labelledby="top-picks">
+    <div class="sh">
+      <h2 id="top-picks">Top picks for you</h2>
+      <p>A fresh mix every visit</p>
+    </div>
     <div class="hero-in">
       <div class="slides" id="slides">
         <article class="slide is-on" aria-roledescription="slide" aria-label="1 of 8">
@@ -498,7 +502,7 @@ footer .f-row a:hover{border-color:var(--paper)}
 </footer>
 
 <script>
-  // Hero slideshow (random order each visit): every 5 seconds the photo row glides left, the next photo lights up and the text changes.
+  // Hero slideshow, "Top picks for you" (6 random looks each visit): every 5 seconds the photo row glides left, the next photo lights up and the text changes.
   // Pauses on hover or keyboard focus; no motion for reduced-motion settings.
   (function () {
     var slides = [].slice.call(document.querySelectorAll('#slides .slide'));
@@ -506,6 +510,10 @@ footer .f-row a:hover{border-color:var(--paper)}
     for (var r = slides.length - 1; r > 0; r--) {
       var q = Math.floor(Math.random() * (r + 1)), t = slides[r]; slides[r] = slides[q]; slides[q] = t;
     }
+    // Show only 6 of them; the rest stay in the Today's picks grid
+    var SHOW = 6;
+    slides.slice(SHOW).forEach(function (s) { s.remove(); });
+    slides = slides.slice(0, SHOW);
     slides.forEach(function (s, n) {
       s.parentNode.appendChild(s);
       s.classList.toggle('is-on', n === 0);
