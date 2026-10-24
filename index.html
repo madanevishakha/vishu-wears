@@ -88,6 +88,7 @@ a{color:inherit;text-decoration:none}
 .dots button[aria-current="true"]::after{background:var(--rani)}
 .dots button:hover{background:none}
 .count{margin-left:auto;font-size:14px;color:var(--wine-2);white-space:nowrap}
+@media (max-width:600px){.dots{display:none}}
 @media (min-width:860px){
   .hero-in{grid-template-columns:minmax(300px,36%) 1fr;grid-template-rows:1fr auto;column-gap:clamp(32px,4vw,56px);row-gap:0}
   .gallery{--ph-h:min(76vh,640px);order:0;grid-column:2;grid-row:1/3}
@@ -290,6 +291,42 @@ footer .f-row a:hover{border-color:var(--paper)}
             <a class="btn" href="https://link.amazon/B0540EPBP" target="_blank" rel="sponsored noopener">Shop on Amazon</a>
           </div>
         </article>
+        <article class="slide" aria-roledescription="slide" aria-label="">
+          <a class="s-ph" href="https://link.amazon/B05UMTbVz" target="_blank" rel="sponsored noopener" tabindex="-1"><img src="img/globus-printed-maxi.jpg" alt="Vishu in the printed halter-neck tiered maxi dress"></a>
+          <div class="s-txt">
+            <p class="s-brand"><span class="tag-pill">Maxi dress</span>Globus</p>
+            <h2>Printed halter maxi dress</h2>
+            <p class="s-note">Tiered fit and flare in a rust, navy and olive tile print.</p>
+            <a class="btn" href="https://link.amazon/B05UMTbVz" target="_blank" rel="sponsored noopener">Shop on Amazon</a>
+          </div>
+        </article>
+        <article class="slide" aria-roledescription="slide" aria-label="">
+          <a class="s-ph" href="https://link.amazon/B09RdDP6r" target="_blank" rel="sponsored noopener" tabindex="-1"><img src="img/misschase-lavender-maxi.jpg" alt="Vishu in the dusty lavender maxi dress with flutter sleeves and embroidered yoke"></a>
+          <div class="s-txt">
+            <p class="s-brand"><span class="tag-pill">Maxi dress</span>Miss Chase</p>
+            <h2>Dusty lavender flutter-sleeve maxi</h2>
+            <p class="s-note">Embroidered boat-neck yoke, flutter sleeves and a full flowing skirt.</p>
+            <a class="btn" href="https://link.amazon/B09RdDP6r" target="_blank" rel="sponsored noopener">Shop on Amazon</a>
+          </div>
+        </article>
+        <article class="slide" aria-roledescription="slide" aria-label="">
+          <a class="s-ph" href="https://link.amazon/B055N6kx8" target="_blank" rel="sponsored noopener" tabindex="-1"><img src="img/madhuram-black-gown.jpg" alt="Vishu in the black georgette maxi gown with floral embroidery and cape sleeves"></a>
+          <div class="s-txt">
+            <p class="s-brand"><span class="tag-pill">Maxi dress</span>Madhuram</p>
+            <h2>Black embroidered georgette gown</h2>
+            <p class="s-note">Floral sequin yoke, cold shoulders and dramatic sheer cape sleeves.</p>
+            <a class="btn" href="https://link.amazon/B055N6kx8" target="_blank" rel="sponsored noopener">Shop on Amazon</a>
+          </div>
+        </article>
+        <article class="slide" aria-roledescription="slide" aria-label="">
+          <a class="s-ph" href="https://link.amazon/B02HLhZF4" target="_blank" rel="sponsored noopener" tabindex="-1"><img src="img/misschase-mulberry-wrap.jpg" alt="Vishu in the mulberry wrap maxi dress with lace panel"></a>
+          <div class="s-txt">
+            <p class="s-brand"><span class="tag-pill">Maxi dress</span>Miss Chase</p>
+            <h2>Mulberry wrap maxi with lace</h2>
+            <p class="s-note">V-neck wrap with a tie waist and lace on the shoulder and sleeves.</p>
+            <a class="btn" href="https://link.amazon/B02HLhZF4" target="_blank" rel="sponsored noopener">Shop on Amazon</a>
+          </div>
+        </article>
       </div>
       <div class="gallery" aria-hidden="true"><div class="track" id="track"></div></div>
       <div class="ctrl">
@@ -301,7 +338,7 @@ footer .f-row a:hover{border-color:var(--paper)}
     </div>
   </section>
 
-  <!-- EDIT: one <a class="pick"> per dress. Photos live in img/. data-tag is "coord" (Co-ord sets) or "festive" (Festive wear). -->
+  <!-- EDIT: one <a class="pick"> per dress. Photos live in img/. data-tag is "coord" (Co-ord sets), "festive" (Festive wear) or "maxi" (Maxi dresses). -->
   <section class="wrap picks" id="picks" aria-labelledby="tp">
     <div class="sh">
       <h2 id="tp">Today’s picks</h2>
@@ -311,6 +348,7 @@ footer .f-row a:hover{border-color:var(--paper)}
       <button type="button" data-f="all" aria-pressed="true">All</button>
       <button type="button" data-f="coord" aria-pressed="false">Co-ord sets</button>
       <button type="button" data-f="festive" aria-pressed="false">Festive wear</button>
+      <button type="button" data-f="maxi" aria-pressed="false">Maxi dresses</button>
     </div>
     <div class="grid">
       <a class="pick" data-tag="coord" href="https://link.amazon/B0dDopewB" target="_blank" rel="sponsored noopener">
@@ -369,6 +407,34 @@ footer .f-row a:hover{border-color:var(--paper)}
         <h3>Light green embroidered kurta</h3>
         <span class="shop">Shop on Amazon</span>
       </a>
+      <a class="pick" data-tag="maxi" href="https://link.amazon/B05UMTbVz" target="_blank" rel="sponsored noopener">
+        <div class="ph"><img src="img/globus-printed-maxi.jpg" alt="Vishu in the printed halter-neck tiered maxi dress" loading="lazy"></div>
+        <span class="tag-pill">Maxi dress</span>
+        <p class="brand">Globus</p>
+        <h3>Printed halter maxi dress</h3>
+        <span class="shop">Shop on Amazon</span>
+      </a>
+      <a class="pick" data-tag="maxi" href="https://link.amazon/B09RdDP6r" target="_blank" rel="sponsored noopener">
+        <div class="ph"><img src="img/misschase-lavender-maxi.jpg" alt="Vishu in the dusty lavender maxi dress with flutter sleeves and embroidered yoke" loading="lazy"></div>
+        <span class="tag-pill">Maxi dress</span>
+        <p class="brand">Miss Chase</p>
+        <h3>Dusty lavender flutter-sleeve maxi</h3>
+        <span class="shop">Shop on Amazon</span>
+      </a>
+      <a class="pick" data-tag="maxi" href="https://link.amazon/B055N6kx8" target="_blank" rel="sponsored noopener">
+        <div class="ph"><img src="img/madhuram-black-gown.jpg" alt="Vishu in the black georgette maxi gown with floral embroidery and cape sleeves" loading="lazy"></div>
+        <span class="tag-pill">Maxi dress</span>
+        <p class="brand">Madhuram</p>
+        <h3>Black embroidered georgette gown</h3>
+        <span class="shop">Shop on Amazon</span>
+      </a>
+      <a class="pick" data-tag="maxi" href="https://link.amazon/B02HLhZF4" target="_blank" rel="sponsored noopener">
+        <div class="ph"><img src="img/misschase-mulberry-wrap.jpg" alt="Vishu in the mulberry wrap maxi dress with lace panel" loading="lazy"></div>
+        <span class="tag-pill">Maxi dress</span>
+        <p class="brand">Miss Chase</p>
+        <h3>Mulberry wrap maxi with lace</h3>
+        <span class="shop">Shop on Amazon</span>
+      </a>
     </div>
   </section>
 
@@ -413,7 +479,7 @@ footer .f-row a:hover{border-color:var(--paper)}
     <!-- Portrait: vishu.jpg next to this file -->
     <div class="arch"><img src="vishu.jpg" alt="Vishu, an AI-generated character, in a rust kurta and silver jhumkas"></div>
     <div class="intro">
-      <p><strong>Hi, I’m Vishu.</strong><br>A budget-friendly fashion stylist from Mumbai, finding stylish kurtis, dresses and co-ords on Amazon and Myntra. Look expensive, spend smart.</p>
+      <p><strong>Hi, I’m Vishu.</strong><br>A budget-friendly fashion stylist from Mumbai, finding stylish kurtis, dresses and co-ords on Amazon and Myntra. I go through ratings and real buyer reviews before I pick a style, so you shop smarter. Look expensive, spend smart.</p>
       <a class="btn" href="#picks">See today’s picks</a>
     </div>
   </section>
@@ -518,7 +584,7 @@ footer .f-row a:hover{border-color:var(--paper)}
     window.addEventListener('load', function () { place(g, false); start(); });
   })();
 
-  // Tag filter for Today's picks. Links ending in #co-ord-sets or #festive-wear open with that tag selected.
+  // Tag filter for Today's picks. Links ending in #co-ord-sets, #festive-wear or #maxi-dresses open with that tag selected.
   (function () {
     var btns = [].slice.call(document.querySelectorAll('.tags button'));
     var picks = [].slice.call(document.querySelectorAll('.pick'));
@@ -533,7 +599,7 @@ footer .f-row a:hover{border-color:var(--paper)}
     }
     btns.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.f); }); });
     function fromHash() {
-      var h = { '#co-ord-sets': 'coord', '#festive-wear': 'festive' }[location.hash];
+      var h = { '#co-ord-sets': 'coord', '#festive-wear': 'festive', '#maxi-dresses': 'maxi' }[location.hash];
       if (h) { show(h); document.getElementById('picks').scrollIntoView(); }
     }
     window.addEventListener('hashchange', fromHash); fromHash();
